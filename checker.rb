@@ -5,6 +5,7 @@ require 'digest/sha1'
 class Checker
   def initialize(folder)
     @folder = folder
+    @hashes = {}
   end
 
   def folder_items
@@ -19,24 +20,35 @@ class Checker
     Digest::SHA1.hexdigest file_content(dir, file_name)
   end
 
-  def array_of_hashes
-    folder_items.map do |file_name|
-      { file_name => encoded_content(@folder, file_name) }
+  def one_encrypted_file
+    folder_items.map { |name| encoded_content(@folder, name) }.first
+  end
+
+  def joined_hashes(name)
+    if @hashes.key?(one_encrypted_file)
+      @hashes[one_encrypted_file] << [name]
+    else
+      @hashes[one_encrypted_file] = [[name]]
     end
   end
 
-  def repetitive_value
-    uniq_value = array_of_hashes.map { |hash| hash.values.join }
-    uniq_value.detect { |code| uniq_value.count(code) > 1 }
+  def array_of_hashes
+    folder_items.map do |name|
+      each_encrypted_file = encoded_content(@folder, name)
+      if one_encrypted_file == each_encrypted_file
+        joined_hashes(name)
+      else
+        @hashes[each_encrypted_file] = [name]
+      end
+    end
+  end
+
+  def repetitive_files
+    @hashes.select { |_key, val| val.count > 1 }.values
   end
 
   def check
-    array_of_hashes.map do |hash|
-      if repetitive_value == hash.values.first
-        puts "#{hash.keys.first} - Использован несколько раз"
-      else
-        puts "#{hash.keys.first} - Повторений нет"
-      end
-    end
+    array_of_hashes
+    puts repetitive_files
   end
 end
