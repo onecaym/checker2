@@ -8,37 +8,31 @@ class Checker
     @hashes = {}
   end
 
+  attr_reader :folder
+
   def folder_items
-    Dir.children(@folder)
+    Dir.children(folder)
+  end
+
+  def path(dir, file_name)
+    File.join(dir, file_name)
   end
 
   def file_content(dir, file_name)
-    File.read("#{dir}#{file_name}")
+    File.read(path(dir, file_name))
   end
 
   def encoded_content(dir, file_name)
     Digest::SHA1.hexdigest file_content(dir, file_name)
   end
 
-  def one_encrypted_file
-    folder_items.map { |name| encoded_content(@folder, name) }.first
-  end
-
-  def joined_hashes(name)
-    if @hashes.key?(one_encrypted_file)
-      @hashes[one_encrypted_file] << [name]
-    else
-      @hashes[one_encrypted_file] = [[name]]
-    end
-  end
-
   def array_of_hashes
-    folder_items.map do |name|
-      each_encrypted_file = encoded_content(@folder, name)
-      if one_encrypted_file == each_encrypted_file
-        joined_hashes(name)
+    folder_items.each do |file|
+      code = encoded_content(folder, file)
+      if @hashes.key?(code)
+        @hashes[code] << file
       else
-        @hashes[each_encrypted_file] = [name]
+        @hashes[code] = [file]
       end
     end
   end
