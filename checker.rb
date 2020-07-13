@@ -26,7 +26,7 @@ class Checker
     Digest::SHA1.hexdigest file_content(dir, file_name)
   end
 
-  def group_by_content
+  def group_files
     folder_items.each do |file|
       code = encoded_content(folder, file)
       if @grouped_files.key?(code)
@@ -42,7 +42,7 @@ class Checker
   end
 
   def check
-    group_by_content
+    group_files
     puts repetitive_files
   end
 end
