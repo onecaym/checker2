@@ -5,7 +5,7 @@ require 'digest/sha1'
 class Checker
   def initialize(folder)
     @folder = folder
-    @hashes = {}
+    @grouped_files = {}
   end
 
   attr_reader :folder
@@ -26,23 +26,23 @@ class Checker
     Digest::SHA1.hexdigest file_content(dir, file_name)
   end
 
-  def array_of_hashes
+  def group_by_content
     folder_items.each do |file|
       code = encoded_content(folder, file)
-      if @hashes.key?(code)
-        @hashes[code] << file
+      if @grouped_files.key?(code)
+        @grouped_files[code] << file
       else
-        @hashes[code] = [file]
+        @grouped_files[code] = [file]
       end
     end
   end
 
   def repetitive_files
-    @hashes.select { |_key, val| val.count > 1 }.values
+    @grouped_files.select { |_key, val| val.count > 1 }.values
   end
 
   def check
-    array_of_hashes
+    group_by_content
     puts repetitive_files
   end
 end
