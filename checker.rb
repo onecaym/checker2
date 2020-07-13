@@ -9,6 +9,7 @@ class Checker
   end
 
   attr_reader :folder
+  attr_reader :grouped_files
 
   def folder_items
     Dir.children(folder)
@@ -29,16 +30,16 @@ class Checker
   def group_files
     folder_items.each do |file|
       code = encoded_content(folder, file)
-      if @grouped_files.key?(code)
-        @grouped_files[code] << file
+      if grouped_files.key?(code)
+        grouped_files[code] << file
       else
-        @grouped_files[code] = [file]
+        grouped_files[code] = [file]
       end
     end
   end
 
   def repetitive_files
-    @grouped_files.select { |_key, val| val.count > 1 }.values
+    grouped_files.select { |_key, val| val.count > 1 }.values
   end
 
   def check
