@@ -1,6 +1,7 @@
 require 'csv'
 require 'fileutils'
 require 'digest/sha1'
+require_relative 'input'
 
 class Checker
   def initialize(folder)
@@ -11,7 +12,7 @@ class Checker
   
   def check
     group_files
-    puts duplicated_files
+    input.duplicated_files
   end
 
   private
@@ -45,7 +46,7 @@ class Checker
     end
   end
 
-  def duplicated_files
-    grouped_files.values.select { |files| files.count > 1 }
+  def input
+    Input.new(grouped_files)
   end
 end
