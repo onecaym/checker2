@@ -8,6 +8,12 @@ class Checker
     @grouped_files = {}
   end
 
+  
+  def check
+    group_files
+    puts duplicated_files
+  end
+
   private
 
   attr_reader :folder, :grouped_files
@@ -41,12 +47,5 @@ class Checker
 
   def duplicated_files
     grouped_files.values.select { |files| files.count > 1 }
-  end
-
-  public
-
-  def check
-    group_files
-    puts duplicated_files
   end
 end
