@@ -8,28 +8,27 @@ class Checker
     @grouped_files = {}
   end
 
-  attr_reader :folder
-  attr_reader :grouped_files
+  attr_reader :folder, :grouped_files
 
   def folder_items
     Dir.children(folder)
   end
 
-  def path(dir, file_name)
-    File.join(dir, file_name)
+  def path(file_name)
+    File.join(folder, file_name)
   end
 
-  def file_content(dir, file_name)
-    File.read(path(dir, file_name))
+  def file_content(file_name)
+    File.read(path(file_name))
   end
 
-  def encoded_content(dir, file_name)
-    Digest::SHA1.hexdigest file_content(dir, file_name)
+  def encoded_content(file_name)
+    Digest::SHA1.hexdigest file_content(file_name)
   end
 
   def group_files
     folder_items.each do |file|
-      code = encoded_content(folder, file)
+      code = encoded_content(file)
       if grouped_files.key?(code)
         grouped_files[code] << file
       else
