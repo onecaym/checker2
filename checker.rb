@@ -37,12 +37,12 @@ class Checker
     end
   end
 
-  def repetitive_files
-    grouped_files.select { |_key, val| val.count > 1 }.values
+  def duplicated_files
+    grouped_files.values.select { |files| files.count > 1 }
   end
 
   def check
     group_files
-    puts repetitive_files
+    puts duplicated_files
   end
 end
