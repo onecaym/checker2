@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative 'duplicated_content'
-duplicated_files = Duplicated_content.new('folder/')
-duplicated_files.find
+require_relative 'checker'
+duplicated_files = Duplicatedcontent.new(Checker.new('folder'))
+duplicated_files.show_duplicated_files

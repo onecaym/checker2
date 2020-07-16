@@ -8,10 +8,9 @@ class Checker
     @grouped_files = {}
   end
 
-  
   def check
-   group_files
-   grouped_files
+    group_files
+    grouped_files
   end
 
   private
