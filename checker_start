@@ -2,5 +2,5 @@
 
 require_relative 'duplicated_content'
 require_relative 'checker'
-duplicated_files = Duplicated_content.new(Checker.new('folder'))
+duplicated_files = DuplicatedContent.new(Checker.new('folder'))
 duplicated_files.show_duplicated_files

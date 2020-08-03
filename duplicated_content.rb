@@ -1,5 +1,5 @@
 require_relative 'checker'
-class Duplicated_content
+class DuplicatedContent
   def initialize(folder)
     @folder = folder
   end
