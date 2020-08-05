@@ -6,16 +6,24 @@ class Checker
   def initialize(folder)
     @folder = folder
     @grouped_files = {}
+    check
   end
 
   def check
-    group_files
-    grouped_files
+   group_files
+  end
+
+  def duplicated_files
+    find_duplicated_files(grouped_files)
   end
 
   private
 
   attr_reader :folder, :grouped_files
+
+  def find_duplicated_files(hash)
+    hash.values.select { |files| files.count > 1 }
+  end
 
   def folder_items
     Dir.children(folder)

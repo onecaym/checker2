@@ -1,22 +1,12 @@
 require_relative 'checker'
 class DuplicatedContent
-  def initialize(folder)
-    @folder = folder
+  def initialize(checker)
+    @checker = checker
   end
 
-  attr_reader :folder
+  attr_reader :checker
 
   def show_duplicated_files
-    puts duplicated_files
-  end
-
-  private
-
-  def duplicated_files
-    grouped_files.values.select { |files| files.count > 1 }
-  end
-
-  def grouped_files
-    folder.check
+    puts checker.duplicated_files
   end
 end
