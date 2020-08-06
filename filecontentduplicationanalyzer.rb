@@ -2,7 +2,7 @@ require 'csv'
 require 'fileutils'
 require 'digest/sha1'
 
-class Checker
+class FileContentDuplicationAnalyzer
   def initialize(folder)
     @folder = folder
     @grouped_files = {}
