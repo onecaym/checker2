@@ -13,9 +13,21 @@ class FileContentDuplicationFinder
     grouped_files.values.select { |files| files.count > 1 }
   end
 
+  def files_count
+    folder_items.count
+  end
+
+  def folder_name
+    folder
+  end
+
   private
 
   attr_reader :folder, :grouped_files
+
+  # def array_tems(array)
+  #   array.select {|element| element}
+  # end
 
   def folder_items
     Dir.children(folder)
