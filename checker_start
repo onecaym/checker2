@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'duplicatedfilesreport'
-require_relative 'filecontentduplicationfinder'
-duplicated_files = DuplicatedFilesReport.new(FileContentDuplicationFinder.new('folder'))
-duplicated_files.show_duplicated_files
+require_relative 'duplicated_files_report'
+require_relative 'file_content_duplication_finder'
+report = DuplicatedFilesReport.new(FileContentDuplicationFinder.new('folder'))
+report.show_duplicated_files
