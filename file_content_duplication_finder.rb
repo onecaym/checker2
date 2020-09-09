@@ -25,10 +25,6 @@ class FileContentDuplicationFinder
 
   attr_reader :folder, :grouped_files
 
-  # def array_tems(array)
-  #   array.select {|element| element}
-  # end
-
   def folder_items
     Dir.children(folder)
   end
