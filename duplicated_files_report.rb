@@ -6,21 +6,21 @@ class DuplicatedFilesReport
 
   attr_reader :finder
 
-  def show_folder_name
+  def show_folder_name_and_count
   	puts "Имя папки: #{finder.folder_name}"
-  end
-
-  def show_files_count
   	puts "Общее количество файлов: #{finder.files_count}"
   end
 
-  def show_same_files
-  	finder.duplicated_files.select {|array| puts array.join(", ").to_s + " - Одинаковые по наполнению файлы"}
+  def prepare_files(array)
+  	array.join(", ").to_s + " - Одинаковые по наполнению файлы"
   end
 
-  def provide_data
-  	show_folder_name
-  	show_files_count
+  def show_same_files
+  	finder.duplicated_files.select {|array| puts prepare_files(array)}
+  end
+
+  def print_data
+  	show_folder_name_and_count
   	show_same_files
   end
 end

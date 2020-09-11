@@ -3,4 +3,4 @@
 require_relative 'duplicated_files_report'
 require_relative 'file_content_duplication_finder'
 report = DuplicatedFilesReport.new(FileContentDuplicationFinder.new('folder'))
-report.provide_data
+report.print_data
