@@ -1,4 +1,5 @@
 require_relative 'file_content_duplication_finder'
+
 class DuplicatedFilesReport
   def initialize(finder)
     @finder = finder
@@ -11,12 +12,12 @@ class DuplicatedFilesReport
   	puts "Общее количество файлов: #{finder.files_count}"
   end
 
-  def prepare_files(array)
+  def prepared_for_printig_files(array)
   	array.join(", ").to_s + " - Одинаковые по наполнению файлы"
   end
 
   def show_same_files
-  	finder.duplicated_files.select {|array| puts prepare_files(array)}
+  	finder.duplicated_files.map {|array| puts prepared_for_printig_files(array)}
   end
 
   def print_data
